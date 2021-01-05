@@ -1,0 +1,25 @@
+version: "3"
+services:
+  app:
+    container_name: expressApp
+    restart: always
+    build: .          
+    ports:
+      - "3002:3002"
+      - "9229:9229"
+    volumes: 
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    links:
+      - mongo        
+    depends_on: 
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes: 
+      - ./mongoDatabaseDump:/data/db
+    ports:
+      - "27017:27017"  
+volumes:
+    node_modules:
